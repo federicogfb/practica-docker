@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    env_file: ./postgres/.env  
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - my-network
+  
+  django-backend:
+    container_name: django-backend
+    image: django-backend
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    # entrypoint: /app/entrypoint.sh #This will remain commented because an entrypoint already exists inside the Dockerfile
+    env_file: ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - my-network
+
+  node-frontend:
+    container_name: node-frontend
+    image: node-frontend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    depends_on:
+      - django-backend
+    ports:
+      - "3000:3000"
+    networks:
+      - my-network
+    
+
+
+volumes:
+  pg_data:
+networks:
+  my-network:
