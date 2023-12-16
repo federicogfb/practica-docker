@@ -1,0 +1,19 @@
+apiVersion: v1
+data:
+  ALLOWED_HOSTS: '*'
+  DEBUG: "1"
+  REACT_APP_API_URL: http://django-backend:8000
+  RUNSERVER_PORT: "8000"
+  SECRET_KEY: mysecret
+  SQL_DATABASE: postgres
+  SQL_ENGINE: django.db.backends.postgresql
+  SQL_HOST: postgres
+  SQL_PASSWORD: "12345678"
+  SQL_PORT: "5432"
+  SQL_USER: admin
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: django-backend-home-federico-Desktop-desafio-2022-backend--env
+  name: home-federico-Desktop-desafio-2022-backend--env
